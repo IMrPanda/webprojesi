@@ -1,0 +1,133 @@
+<!-- ŞEHRİM HAKKINDA -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Şehrim</title>
+  <link rel="stylesheet" href="style/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Slider için CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css">
+</head>
+<body>
+
+  <!-- Navbar (index.html ile aynı) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Sinan'ın Sitesi</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Hakkımda</a></li>
+          <li class="nav-item"><a class="nav-link" href="cv.html">CV</a></li>
+          <li class="nav-item"><a class="nav-link active" href="sehir.html">Şehrim</a></li>
+          <li class="nav-item"><a class="nav-link" href="miras.html">Mirasımız</a></li>
+          <li class="nav-item"><a class="nav-link" href="iletisim.html">İletişim</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Şehir Bilgileri -->
+  <main class="container my-5">
+    <header class="text-center mb-5">
+      <h1>İstanbul</h1>
+      <p class="lead">Kıtaları birleştiren şehir</p>
+    </header>
+
+    <!-- Slider -->
+    <section class="mb-5">
+      <div class="gallery js-flickity" data-flickity='{ "wrapAround": true }'>
+        <div class="gallery-cell">
+          <img src="assets/slider/ayasofya.jpg" class="img-fluid" alt="Ayasofya">
+          <div class="caption">Ayasofya Camii</div>
+        </div>
+        <div class="gallery-cell">
+          <img src="assets/slider/kiz_kulesi.jpg" class="img-fluid" alt="Kız Kulesi">
+          <div class="caption">Kız Kulesi</div>
+        </div>
+        <div class="gallery-cell">
+          <img src="assets/slider/topkapi.jpg" class="img-fluid" alt="Topkapı Sarayı">
+          <div class="caption">Topkapı Sarayı</div>
+        </div>
+        <div class="gallery-cell">
+          <img src="assets/slider/bogaz.jpg" class="img-fluid" alt="Boğaz">
+          <div class="caption">İstanbul Boğazı</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Şehir Hakkında Bilgiler -->
+    <section class="row">
+      <div class="col-md-6">
+        <article class="mb-4">
+          <h2>Genel Bilgiler</h2>
+          <p>İstanbul, Türkiye'nin en kalabalık ve ekonomik açıdan en önemli şehridir. 15 milyonu aşan nüfusuyla dünyada en kalabalık şehirlerden biridir.</p>
+          <p>Asya ve Avrupa kıtalarını birbirine bağlayan stratejik konumuyla tarih boyunca önemli bir ticaret merkezi olmuştur.</p>
+        </article>
+
+        <article class="mb-4">
+          <h2>Tarih</h2>
+          <p>İstanbul, 330-395 yılları arasında Roma İmparatorluğu, 395-1204 ile 1261-1453 yılları arasında Doğu Roma İmparatorluğu, 1204-1261 yılları arasında Latin İmparatorluğu ve son olarak 1453-1922 yılları arasında Osmanlı İmparatorluğu'na başkentlik yapmıştır.</p>
+        </article>
+      </div>
+
+      <div class="col-md-6">
+        <article class="mb-4">
+          <h2>Gezilecek Yerler</h2>
+          <ul>
+            <li><a href="#ayasofya">Ayasofya Camii</a></li>
+            <li><a href="#topkapi">Topkapı Sarayı</a></li>
+            <li><a href="#kizkulesi">Kız Kulesi</a></li>
+            <li><a href="#kapalicarsi">Kapalı Çarşı</a></li>
+            <li><a href="#dolmabahce">Dolmabahçe Sarayı</a></li>
+            <li><a href="#galata">Galata Kulesi</a></li>
+          </ul>
+        </article>
+
+        <article class="mb-4">
+          <h2>İklim</h2>
+          <p>İstanbul'da Akdeniz iklimi ile Karadeniz iklimi arasında geçiş özelliği gösteren bir iklim görülür. Yazlar sıcak ve nemli, kışlar soğuk, yağışlı ve bazen karlıdır.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Detaylı Bilgiler -->
+    <section class="mt-5">
+      <h2 class="text-center mb-4">Şehrin Önemli Yerleri</h2>
+      
+      <article id="ayasofya" class="row mb-4">
+        <div class="col-md-4">
+          <img src="assets/slider/ayasofya.jpg" class="img-fluid rounded" alt="Ayasofya">
+        </div>
+        <div class="col-md-8">
+          <h3>Ayasofya Camii</h3>
+          <p>Ayasofya, Bizans İmparatoru I. Justinianus tarafından 532-537 yılları arasında inşa ettirilmiş bazilika planlı bir patrik katedrali olup, 1453 yılında İstanbul'un fethiyle birlikte camiye çevrilmiş ve günümüzde cami olarak hizmet vermektedir.</p>
+        </div>
+      </article>
+
+      <article id="topkapi" class="row mb-4">
+        <div class="col-md-4">
+          <img src="assets/slider/topkapi.jpg" class="img-fluid rounded" alt="Topkapı Sarayı">
+        </div>
+        <div class="col-md-8">
+          <h3>Topkapı Sarayı</h3>
+          <p>Topkapı Sarayı, İstanbul Sarayburnu'nda, Osmanlı İmparatorluğu'nun 600 yıllık tarihinin 400 yılı boyunca, devletin idare merkezi olarak kullanılan ve Osmanlı padişahlarının yaşadığı saraydır.</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- Footer (index.html ile aynı) -->
+  <footer class="bg-dark text-white text-center py-3">
+    <p>© 2025 Sinan Ulusinan - Tüm hakları saklıdır.</p>
+  </footer>
+
+  <!-- Slider için JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.pkgd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
