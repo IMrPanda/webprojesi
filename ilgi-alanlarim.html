@@ -1,0 +1,116 @@
+<!-- API veri sayfası -->
+ <!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>İlgi Alanlarım</title>
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="icon" type="image/" href="assets/images/favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar (index.html ile aynı) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Sinan'ın Sitesi</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Hakkımda</a></li>
+          <li class="nav-item"><a class="nav-link" href="cv.html">CV</a></li>
+          <li class="nav-item"><a class="nav-link" href="sehir.html">Şehrim</a></li>
+          <li class="nav-item"><a class="nav-link" href="miras.html">Mirasımız</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ilgi-alanlarim.html">İlgi Alanlarım</a></li>
+          <li class="nav-item"><a class="nav-link" href="iletisim.html">İletişim</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Giriş Yap</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- İlgi Alanları İçeriği -->
+  <main class="container my-5">
+    <header class="text-center mb-5">
+      <h1>İlgi Alanlarım</h1>
+      <p class="lead">API kullanarak sevdiğim filmleri gösteriyorum</p>
+    </header>
+
+    <section class="mb-5">
+      <h2 class="mb-4">Sevdiğim Filmler</h2>
+      <div class="row" id="filmler">
+        <!-- API'den gelen veriler buraya eklenecek -->
+        <div class="col-12 text-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Yükleniyor...</span>
+          </div>
+          <p>Filmler yükleniyor...</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <h2 class="mb-4">API Kullanımı</h2>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">The Movie Database (TMDb) API</h5>
+          <p class="card-text">Bu sayfada The Movie Database (TMDb) API'sini kullanarak popüler filmleri listeliyorum. API'den gelen verileri JavaScript ile işleyerek burada görsel bir şekilde sunuyorum.</p>
+          <p>API anahtarını korumak için istekler proxy sunucu üzerinden yapılmaktadır.</p>
+          <a href="https://www.themoviedb.org/" class="btn btn-primary" target="_blank">TMDb Web Sitesi</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer (index.html ile aynı) -->
+  <footer class="bg-dark text-white text-center py-3">
+    <p>© 2025 Sinan Ulusinan - Tüm hakları saklıdır.</p>
+    <p><a href="login.html" class="text-white">Giriş Yap</a></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', function() {
+      // API'den film verilerini çekme
+      fetch('https://api.themoviedb.org/3/movie/popular?api_key=3442cf20a75e7a52b5f3729e861ba9ba&language=tr-TR')
+        .then(response => response.json())
+        .then(data => {
+          const filmlerContainer = document.getElementById('filmler');
+          filmlerContainer.innerHTML = '';
+          
+          // İlk 6 filmi al
+          const filmler = data.results.slice(0, 6);
+          
+          filmler.forEach(film => {
+            const filmKarti = `
+              <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                  <img src="https://image.tmdb.org/t/p/w500${film.poster_path}" class="card-img-top" alt="${film.title}">
+                  <div class="card-body">
+                    <h5 class="card-title">${film.title}</h5>
+                    <p class="card-text">${film.overview.substring(0, 100)}...</p>
+                    <span class="badge bg-primary">Puan: ${film.vote_average}</span>
+                  </div>
+                  <div class="card-footer">
+                    <small class="text-muted">Çıkış Tarihi: ${film.release_date}</small>
+                  </div>
+                </div>
+              </div>
+            `;
+            filmlerContainer.innerHTML += filmKarti;
+          });
+        })
+        .catch(error => {
+          console.error('API hatası:', error);
+          document.getElementById('filmler').innerHTML = `
+            <div class="col-12">
+              <div class="alert alert-danger">Filmler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</div>
+            </div>
+          `;
+        });
+    });</script>  
+  
+</body>
+</html>
