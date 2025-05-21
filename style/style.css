@@ -54,7 +54,6 @@ body {
     background: #8C8;
     counter-increment: gallery-cell;
     position: relative;
-    transition: opacity 0.5s ease-in-out;
 }
 
 .gallery-cell img {

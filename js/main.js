@@ -1,4 +1,6 @@
+
 // APİ'den veri çekme
+ 
 
 // Navbar'ı küçük ekranlarda responsive yapma
 document.addEventListener('DOMContentLoaded', function() {
@@ -25,39 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.location.pathname.includes('form-sonuc.html')) {
         processFormResults();
     }
-
-    /**************** YENİ EKLENEN KISIM - FLICKITY SLIDER AYARLARI ****************/
-    // Slider varsa başlat
-    const gallery = document.querySelector('.gallery');
-    if (gallery) {
-        const flkty = new Flickity(gallery, {
-            wrapAround: true,
-            autoPlay: 3000,
-            pauseAutoPlayOnHover: true,
-            // Daha smooth geçişler için
-            fade: true,
-            imagesLoaded: true
-        });
-
-        // Kullanıcı etkileşiminden sonra autoplay'i yeniden başlat
-        flkty.on('staticClick', function() {
-            flkty.playPlayer();
-        });
-
-        // Butonlara tıklandığında autoplay'i yeniden başlat
-        const nextButton = document.querySelector('.flickity-button.next');
-        const prevButton = document.querySelector('.flickity-button.previous');
-
-        if (nextButton && prevButton) {
-            nextButton.addEventListener('click', function() {
-                flkty.playPlayer();
-            });
-            prevButton.addEventListener('click', function() {
-                flkty.playPlayer();
-            });
-        }
-    }
-    /******************************************************************************/
 });
 
 function processFormResults() {
