@@ -1,4 +1,3 @@
-<!-- İLETİŞİM FORMU -->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -43,7 +42,7 @@
             <h3 class="mb-0">İletişim Formu</h3>
           </div>
           <div class="card-body">
-            <form @submit.prevent="validateForm" action="form-sonuc.html" method="GET">
+            <form id="contactForm" @submit.prevent="validateFormVue" action="form-sonuc.html" method="GET">
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="firstName" class="form-label">Adınız</label>
@@ -92,6 +91,47 @@
                 <div class="invalid-feedback" v-if="errors.message">Lütfen mesajınızı giriniz.</div>
               </div>
 
+              <!-- Yeni Eklenen Alanlar -->
+              <div class="mb-3">
+                <label class="form-label">Mesaj Türü</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="eliketler" name="messageType" 
+                         v-model="form.messageTypes.eliketler" value="eliketler">
+                  <label class="form-check-label" for="eliketler">Eliketler</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="dusuk" name="messageType" 
+                         v-model="form.messageTypes.dusuk" value="dusuk">
+                  <label class="form-check-label" for="dusuk">Düşük</label>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Cevap Türü</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="cevapTelefon" name="responseType" 
+                         v-model="form.responseType" value="telefon">
+                  <label class="form-check-label" for="cevapTelefon">Telefon</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="cevapMail" name="responseType" 
+                         v-model="form.responseType" value="mail">
+                  <label class="form-check-label" for="cevapMail">Mail</label>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="responseDate" class="form-label">Beklenen Cevap Tarihi</label>
+                <input type="date" class="form-control" id="responseDate" name="responseDate" 
+                       v-model="form.responseDate">
+              </div>
+
+              <div class="mb-3">
+                <label for="messageTime" class="form-label">Mesaj Saati</label>
+                <input type="time" class="form-control" id="messageTime" name="messageTime" 
+                       v-model="form.messageTime">
+              </div>
+
               <div class="mb-3">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter" 
@@ -104,7 +144,8 @@
 
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="button" class="btn btn-secondary me-md-2" @click="resetForm">Temizle</button>
-                <button type="submit" class="btn btn-primary">Gönder</button>
+                <button type="button" id="jsValidateBtn" class="btn btn-warning me-md-2">JavaScript ile Doğrula</button>
+                <button type="submit" class="btn btn-primary">Vue.js ile Gönder</button>
               </div>
             </form>
           </div>
@@ -138,7 +179,7 @@
     <p class="nav-item"><a class="nav-link active" href="form-sonuc.html">Form Sonucu</a></p>
   </footer>
 
-  <!-- Vue.js Uygulaması -->
+  <!-- Vue.js ile kontrol -->
   <script>
     new Vue({
       el: '#app',
@@ -150,6 +191,13 @@
           phone: '',
           subject: '',
           message: '',
+          messageTypes: {
+            eliketler: false,
+            dusuk: false
+          },
+          responseType: '',
+          responseDate: '',
+          messageTime: '',
           newsletter: false
         },
         errors: {
@@ -158,13 +206,14 @@
           email: false,
           phone: false,
           subject: false,
-          message: false
+          message: false,
+
         },
         validationResults: {},
         showValidationResults: false
       },
       methods: {
-        validateForm() {
+        validateFormVue() {
           // Hataları sıfırla
           this.resetErrors();
           
@@ -220,6 +269,26 @@
           } else {
             results['Mesaj'] = 'Geçerli';
           }
+        
+          
+          // Mesaj türü
+          const messageTypes = [];
+          if (this.form.messageTypes.eliketler) messageTypes.push('Eliketler');
+          if (this.form.messageTypes.dusuk) messageTypes.push('Düşük');
+          results['Mesaj Türü'] = messageTypes.length ? messageTypes.join(', ') : 'Seçilmedi';
+          
+          // Cevap türü
+          results['Cevap Türü'] = this.form.responseType ? this.form.responseType : 'Seçilmedi';
+        
+          
+          // Beklenen cevap tarihi
+          results['Beklenen Cevap Tarihi'] = this.form.responseDate ? this.form.responseDate : 'Belirtilmedi';
+          
+          // Mesaj saati
+          results['Mesaj Saati'] = this.form.messageTime ? this.form.messageTime : 'Belirtilmedi';
+          
+          // Bülten aboneliği
+          results['Bülten Aboneliği'] = this.form.newsletter ? 'Evet' : 'Hayır';
           
           // Doğrulama sonuçlarını kaydet ve göster
           this.validationResults = results;
@@ -232,6 +301,14 @@
             document.querySelector('form').submit();
           }
         },
+        isValidUrl(string) {
+          try {
+            new URL(string);
+            return true;
+          } catch (_) {
+            return false;
+          }
+        },
         resetForm() {
           this.form = {
             firstName: '',
@@ -240,6 +317,13 @@
             phone: '',
             subject: '',
             message: '',
+            messageTypes: {
+              eliketler: false,
+              dusuk: false
+            },
+            responseType: '',
+            responseDate: '',
+            messageTime: '',
             newsletter: false
           };
           this.resetErrors();
@@ -252,9 +336,193 @@
             email: false,
             phone: false,
             subject: false,
-            message: false
+            message: false,
           };
         }
+      }
+    });
+  </script>
+
+  <!-- JavaScript ile Doğrulama -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const jsValidateBtn = document.getElementById('jsValidateBtn');
+      const contactForm = document.getElementById('contactForm');
+      
+      jsValidateBtn.addEventListener('click', validateFormJS);
+      
+      function validateFormJS() {
+        // Form elemanlarını al
+        const formElements = contactForm.elements;
+        const results = {};
+        let isValid = true;
+        
+        // Tüm hataları temizle
+        clearErrors();
+        
+        // Ad doğrulama
+        const firstName = formElements.firstName.value.trim();
+        if (!firstName) {
+          showError('firstName', 'Lütfen adınızı giriniz.');
+          results['Ad'] = 'Geçersiz - Boş bırakılamaz';
+          isValid = false;
+        } else {
+          results['Ad'] = 'Geçerli';
+        }
+        
+        // Soyad doğrulama
+        const lastName = formElements.lastName.value.trim();
+        if (!lastName) {
+          showError('lastName', 'Lütfen soyadınızı giriniz.');
+          results['Soyad'] = 'Geçersiz - Boş bırakılamaz';
+          isValid = false;
+        } else {
+          results['Soyad'] = 'Geçerli';
+        }
+        
+        // E-posta doğrulama
+        const email = formElements.email.value.trim();
+        const emailRegex = /^[^@]+@[^@]+\.[^@]+$/;
+        if (!emailRegex.test(email)) {
+          showError('email', 'Lütfen geçerli bir e-posta adresi giriniz.');
+          results['E-posta'] = 'Geçersiz - Format hatalı';
+          isValid = false;
+        } else {
+          results['E-posta'] = 'Geçerli';
+        }
+        
+        // Telefon doğrulama
+        const phone = formElements.phone.value.replace(/\D/g, '');
+        const phoneRegex = /^[0-9]{10,11}$/;
+        if (!phoneRegex.test(phone)) {
+          showError('phone', 'Lütfen geçerli bir telefon numarası giriniz (10-11 haneli).');
+          results['Telefon'] = 'Geçersiz - Format hatalı';
+          isValid = false;
+        } else {
+          results['Telefon'] = 'Geçerli';
+        }
+        
+        // Konu doğrulama
+        const subject = formElements.subject.value;
+        if (!subject) {
+          showError('subject', 'Lütfen bir konu seçiniz.');
+          results['Konu'] = 'Geçersiz - Seçim yapılmadı';
+          isValid = false;
+        } else {
+          results['Konu'] = 'Geçerli';
+        }
+        
+        // Mesaj doğrulama
+        const message = formElements.message.value.trim();
+        if (!message) {
+          showError('message', 'Lütfen mesajınızı giriniz.');
+          results['Mesaj'] = 'Geçersiz - Boş bırakılamaz';
+          isValid = false;
+        } else {
+          results['Mesaj'] = 'Geçerli';
+        }
+      
+        
+        
+        // Mesaj türü
+        const messageTypes = [];
+        if (formElements.eliketler.checked) messageTypes.push('Eliketler');
+        if (formElements.dusuk.checked) messageTypes.push('Düşük');
+        results['Mesaj Türü'] = messageTypes.length ? messageTypes.join(', ') : 'Seçilmedi';
+        
+        // Cevap türü
+        const responseType = document.querySelector('input[name="responseType"]:checked');
+        results['Cevap Türü'] = responseType ? responseType.value : 'Seçilmedi';
+        
+        // Beklenen cevap tarihi
+        const responseDate = formElements.responseDate.value;
+        results['Beklenen Cevap Tarihi'] = responseDate ? responseDate : 'Belirtilmedi';
+        
+        // Mesaj saati
+        const messageTime = formElements.messageTime.value;
+        results['Mesaj Saati'] = messageTime ? messageTime : 'Belirtilmedi';
+        
+        // Bülten aboneliği
+        results['Bülten Aboneliği'] = formElements.newsletter.checked ? 'Evet' : 'Hayır';
+        
+        // Sonuçları göster
+        showValidationResults(results);
+        
+        // Eğer form geçerliyse gönder
+        if (isValid) {
+          contactForm.submit();
+        }
+      }
+      
+      function showError(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        field.classList.add('is-invalid');
+        
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'invalid-feedback';
+        errorDiv.textContent = message;
+        
+        // Eğer zaten bir hata mesajı varsa sil
+        const existingError = field.nextElementSibling;
+        if (existingError && existingError.classList.contains('invalid-feedback')) {
+          existingError.remove();
+        }
+        
+        field.parentNode.insertBefore(errorDiv, field.nextSibling);
+      }
+      
+      function clearErrors() {
+        const errorFields = document.querySelectorAll('.is-invalid');
+        errorFields.forEach(field => {
+          field.classList.remove('is-invalid');
+        });
+        
+        const errorMessages = document.querySelectorAll('.invalid-feedback');
+        errorMessages.forEach(message => {
+          message.remove();
+        });
+      }
+      
+      function isValidUrl(string) {
+        try {
+          new URL(string);
+          return true;
+        } catch (_) {
+          return false;
+        }
+      }
+      
+      // Sonuçları göster
+      function showValidationResults(results) {
+        const resultsContainer = document.createElement('div');
+        resultsContainer.className = 'row mt-4';
+        resultsContainer.innerHTML = `
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header bg-info text-white">
+                <h4 class="mb-0">JavaScript Doğrulama Sonuçları</h4>
+              </div>
+              <div class="card-body">
+                <ul class="list-group" id="jsValidationResults">
+                  ${Object.entries(results).map(([field, result]) => `
+                    <li class="list-group-item">
+                      <strong>${field}:</strong> ${result}
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        // Eski sonuçları temizle
+        const existingResults = document.querySelector('.row.mt-4');
+        if (existingResults) {
+          existingResults.remove();
+        }
+        
+        // Formdan sonra ekle
+        contactForm.parentNode.insertBefore(resultsContainer, contactForm.nextSibling);
       }
     });
   </script>
