@@ -5,7 +5,7 @@ Bu projede HTML, CSS, JavaScript ve Bootstrap gibi web teknolojilerini kullanara
 Site İçeriği
 Web sitesi şu bölümlerden oluşacaktır:
 
-- Hakkımda (Ana Sayfa): Kısa bir özgeçmiş ve projeye dair genel bilgiler.
+- Hakkımda (Ana Sayfa): Kısa bir özgeçmiş ve projeye dair genel bilgiler. Artı olarak diğer arkadaşlarımın projelerine giden bir yer koydum.
 
 - CV: Eğitim geçmişim, yeteneklerim ve deneyimlerimin yer aldığı bir özgeçmiş sayfası.
 
