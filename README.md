@@ -1,6 +1,6 @@
 # WebProjem – Bilgi Dokümanı
 
-Bu projede HTML, CSS, JavaScript ve Bootstrap gibi web teknolojilerini kullanarak hem kendimi hem de yaşadığım şehri tanıtan, bilgilendirici ve görsel olarak zengin bir web sitesi tasarlamayı hedefliyorum.
+Bu projede HTML, CSS, JavaScript ve Bootstrap gibi web teknolojilerini kullanarak hem kendimi hem de yaşadığım şehri tanıtan, bilgilendirici ve görsel olarak zengin bir web sitesi tasarlamayı hedefliyorum. Yaptığım siteyi daha sonrasında başka projelerimde kullanmayı da düşünüyorum. Sonraki repositorylerde görünebilir yani bu proje.
 
 Site İçeriği
 Web sitesi şu bölümlerden oluşacaktır:
