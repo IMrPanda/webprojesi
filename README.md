@@ -9,7 +9,7 @@ Web sitesi şu bölümlerden oluşacaktır:
 
 - CV: Eğitim geçmişim, yeteneklerim ve deneyimlerimin yer aldığı bir özgeçmiş sayfası.
 
-- İlgi Alanlarım: API entegrasyonu kullanılarak ilgi alanlarıma dair dış kaynaklardan veri çekilecek ve siteye entegre edilecektir.
+- İlgi Alanlarım: API entegrasyonu kullanılarak ilgi alanlarıma dair dış kaynaklardan veri çekilecek ve siteye entegre edilecektir. Artı olarak hakkımda kısmında da API kullanımı vardır.
 
 - Şehrim & Şehrin Mirası: Şehrime ait tarihi, kültürel ve doğal mirasları tanıtan 4 ila 5 görselle zenginleştirilmiş bir sunum.
 
