@@ -8,9 +8,9 @@
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
     if (isLoggedIn) {
-      loginLink.textContent = 'Çıkış Yap';
+      loginLink.textContent = '⍈ Çıkış Yap';
       loginLink.href = '#';
-      footerLink && (footerLink.textContent = 'Çıkış Yap');
+      footerLink && (footerLink.textContent = '⍈ Çıkış Yap');
 
       loginLink.addEventListener('click', function () {
         localStorage.removeItem('isLoggedIn');
@@ -24,9 +24,9 @@
       });
 
     } else {
-      loginLink.textContent = 'Giriş Yap';
+      loginLink.textContent = '☑ Giriş Yap';
       loginLink.href = 'login.html';
-      footerLink && (footerLink.textContent = 'Giriş Yap');
+      footerLink && (footerLink.textContent = '☑ Giriş Yap');
     }
   });
 

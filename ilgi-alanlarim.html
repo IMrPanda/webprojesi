@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="style/style.css">
   <link rel="icon" type="image/" href="assets/images/favicon.ico">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  
 </head>
 <body>
 
@@ -20,13 +22,13 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Hakkımda</a></li>
-          <li class="nav-item"><a class="nav-link" href="cv.html">CV</a></li>
-          <li class="nav-item"><a class="nav-link" href="sehir.html">Şehrim</a></li>
-          <li class="nav-item"><a class="nav-link" href="miras.html">Mirasımız</a></li>
-          <li class="nav-item"><a class="nav-link active" href="ilgi-alanlarim.html">İlgi Alanlarım</a></li>
-          <li class="nav-item"><a class="nav-link" href="iletisim.html">İletişim</a></li>
-          <li class="nav-item"><a  id="loginLogoutLink" class="nav-link" href="login.html">Giriş Yap</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-info-circle-fill"></i> Hakkımda</a></li>
+        <li class="nav-item"><a class="nav-link" href="cv.html"><i class="bi bi-file-earmark-person-fill"></i> CV</a></li>
+        <li class="nav-item"><a class="nav-link" href="sehir.html"><i class="bi bi-cursor-fill"></i> Şehrim</a></li>
+        <li class="nav-item"><a class="nav-link" href="miras.html"><i class="bi bi-house-heart-fill"></i> Mirasımız</a></li>
+        <li class="nav-item"><a class="nav-link active" href="ilgi-alanlarim.html"><i class="bi bi-controller"></i> İlgi Alanlarım</a></li>
+        <li class="nav-item"><a class="nav-link" href="iletisim.html"><i class="bi bi-headset"></i> İletişim</a></li>
+        <li class="nav-item"><a  id="loginLogoutLink" class="nav-link" href="login.html"><i class="bi bi-box-arrow-in-left"></i> Giriş Yap</a></li>
         </ul>
       </div>
     </div>
@@ -67,7 +69,7 @@
 
   <!-- Footer (index.html ile aynı) -->
   <footer class="bg-dark text-white text-center py-3">
-    <p>© 2025 Sinan Ulusinan - Tüm hakları saklıdır.</p>
+    <p>© 2025 Sinan Ulusinan - Tüm hakları saklıdır. </p>
     <div class="mt-3">
       <h4>Kardeş Siteler</h4>
       <div class="d-flex justify-content-center flex-wrap">
@@ -78,45 +80,73 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>document.addEventListener('DOMContentLoaded', function() {
-      // API'den film verilerini çekme
-      fetch('https://api.themoviedb.org/3/movie/popular?api_key=3442cf20a75e7a52b5f3729e861ba9ba&language=tr-TR')
-        .then(response => response.json())
-        .then(data => {
-          const filmlerContainer = document.getElementById('filmler');
-          filmlerContainer.innerHTML = '';
-          
-          // İlk 6 filmi al
-          const filmler = data.results.slice(0, 6);
-          
-          filmler.forEach(film => {
-            const filmKarti = `
-              <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                  <img src="https://image.tmdb.org/t/p/w500${film.poster_path}" class="card-img-top" alt="${film.title}">
-                  <div class="card-body">
-                    <h5 class="card-title">${film.title}</h5>
-                    <p class="card-text">${film.overview.substring(0, 100)}...</p>
-                    <span class="badge bg-primary">Puan: ${film.vote_average}</span>
-                  </div>
-                  <div class="card-footer">
-                    <small class="text-muted">Çıkış Tarihi: ${film.release_date}</small>
-                  </div>
-                </div>
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const favoriFilmIdleri = [
+    950387,     // Minecrafter: The Movie
+    1233069,   // Exterritorial
+    1241982,   // Moana 2
+    986056,    // Thunderbolts
+    939243,    // Sonic the Hedgehog 3
+    575264     // Mission Impossible
+  ];
+
+  const filmlerContainer = document.getElementById('filmler');
+  filmlerContainer.innerHTML = '';
+
+  const fetchPage = (page) => {
+    return fetch(`https://api.themoviedb.org/3/movie/popular?api_key=3442cf20a75e7a52b5f3729e861ba9ba&language=tr-TR&page=${page}`)
+      .then(response => response.json())
+      .then(data => data.results);
+  };
+
+  Promise.all([fetchPage(1), fetchPage(2), fetchPage(3)])
+    .then(pages => {
+      const tumFilmler = pages.flat();
+
+      const favoriFilmlerListesi = tumFilmler.filter(film =>
+        favoriFilmIdleri.includes(film.id)
+      );
+
+      if (favoriFilmlerListesi.length === 0) {
+        filmlerContainer.innerHTML = `
+          <div class="col-12">
+            <div class="alert alert-warning">Favori filmleriniz listede bulunamadı.</div>
+          </div>
+        `;
+        return;
+      }
+
+      favoriFilmlerListesi.forEach(film => {
+        const filmKarti = `
+          <div class="col-md-4 mb-4">
+            <div class="card h-100">
+              <img src="https://image.tmdb.org/t/p/w500${film.poster_path}" class="card-img-top" alt="${film.title}">
+              <div class="card-body">
+                <h5 class="card-title">${film.title}</h5>
+                <p class="card-text">${film.overview.substring(0, 100)}...</p>
+                <span class="badge bg-primary">Puan: ${film.vote_average}</span>
               </div>
-            `;
-            filmlerContainer.innerHTML += filmKarti;
-          });
-        })
-        .catch(error => {
-          console.error('API hatası:', error);
-          document.getElementById('filmler').innerHTML = `
-            <div class="col-12">
-              <div class="alert alert-danger">Filmler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</div>
+              <div class="card-footer">
+                <small class="text-muted">Çıkış Tarihi: ${film.release_date}</small>
+              </div>
             </div>
-          `;
-        });
-    });</script>  
+          </div>
+        `;
+        filmlerContainer.innerHTML += filmKarti;
+      });
+    })
+    .catch(error => {
+      console.error('API hatası:', error);
+      filmlerContainer.innerHTML = `
+        <div class="col-12">
+          <div class="alert alert-danger">Filmler yüklenirken bir hata oluştu.</div>
+        </div>
+      `;
+    });
+});
+</script> 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/main.js"> </script>
   
 </body>
