@@ -1,6 +1,40 @@
 
-// APİ'den veri çekme
- 
+// Sayfa yüklendiğinde çalışır
+  window.addEventListener('DOMContentLoaded', function () {
+    const loginLink = document.getElementById('loginLogoutLink');
+    const footerLink = document.getElementById('footerLoginLogoutLink');
+
+    // Giriş yapılmış mı kontrol et
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+    if (isLoggedIn) {
+      loginLink.textContent = 'Çıkış Yap';
+      loginLink.href = '#';
+      footerLink && (footerLink.textContent = 'Çıkış Yap');
+
+      loginLink.addEventListener('click', function () {
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = 'index.html';
+      });
+
+      footerLink && footerLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = 'index.html';
+      });
+
+    } else {
+      loginLink.textContent = 'Giriş Yap';
+      loginLink.href = 'login.html';
+      footerLink && (footerLink.textContent = 'Giriş Yap');
+    }
+  });
+
+  // Login form başarıyla gönderildiyse localStorage'a kaydet
+  document.getElementById('loginForm')?.addEventListener('submit', function (e) {
+    // Burada sunucuya gönderim yapılacağı için kontrolü yapmışsın zaten
+    localStorage.setItem('isLoggedIn', 'true');
+  });
 
 // Navbar'ı küçük ekranlarda responsive yapma
 document.addEventListener('DOMContentLoaded', function() {
